@@ -1,8 +1,6 @@
 # AWS
 Développer une application web pour un jeu en ligne de type combat carte 1v1 qui offre plusieurs fonctionnalités.
 
-# Activité du jeu
-* Créer un jeu de plateau tour par tour sur navigateur en Javascript
 
 ## Consignes du projets
 
