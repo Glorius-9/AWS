@@ -15,7 +15,7 @@ background-image:url(a.jpg);
     padding-top: 10px;
     margin-top: 166px;
     height: 400px;
-  }
+}
 
 .deuxiemeCSS {
     font-family: Georgia, serif;
@@ -30,6 +30,30 @@ background-image:url(a.jpg);
     height: 400px;
   }
 
+.troisiemeCSS {
+	display: inline;
+	list-style: none;
+}
+
+
+
+#nav {
+	padding: 0; margin: 0;
+	text-align: center; /* centrer le texte */
+	background: hsla(80, 90%, 40%, 0.7);
+	color: white;
+	margin-bottom: none;
+}
+#nav li {
+	display: inline;
+	list-style: none;
+}
+#nav a {
+	display:inline;
+	margin: 0 30px;
+	color:white;
+	
+}
 
 aside
 {
@@ -80,4 +104,27 @@ a:hover
 a:visited
 {
 	color:navy;
+}
+
+
+.sous{
+display: none;
+background-color:black;
+box-shadow: 0px 1px 2px #CCC;
+
+}
+
+nav > ul li:hover .sous{
+	display: block;
+	
+	
+}
+
+.vertical{
+color: blue;
+background-color:white;
+
+    
+   
+
 }
