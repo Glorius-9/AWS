@@ -1,0 +1,16 @@
+{
+    "name": "temp",
+    "version": "1.0.0",
+    "description": "aws projet",
+    "main": "App.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node App.js"
+    },
+    "author": "glorius",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^5.12.5"
+    }
+}
