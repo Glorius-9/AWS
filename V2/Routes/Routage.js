@@ -1,9 +1,11 @@
 const express = require('express');
 const Router = express.Router();
+const ObjectID = require('mongoose').Types.ObjectId;
 
 const { Users } = require('../models/Users');
 
-// Methode pour recuperer la base de données
+
+// Methode pour recuperer les elements d'une table de la base de données
 Router.get('/', (req, res) => {
     Users.find((err, docs) => {
         if (!err) res.send(docs)
@@ -12,6 +14,7 @@ Router.get('/', (req, res) => {
 
 })
 
+//Methode pour Enregistrer nouveau element
 Router.post('/', (req, res) => {
     const newRecord = new Users({
         Pseudo: req.body.Pseudo,
@@ -23,8 +26,37 @@ Router.post('/', (req, res) => {
     })
 })
 
+// Fonction pour la modification
+Router.put("/:id", (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID non reconnu")
+
+    const UpdateRecorder = {
+        Pseudo: req.params.Pseudo,
+        Password: req.params.Password
+    };
+
+    Users.findByIdAndUpdate(
+        req.params.id, { $set: UpdateRecorder }, { new: true },
+        (err, docs) => {
+            if (!err) res.send(docs);
+            else console.log("erreur lors de modification");
+        }
+    )
+})
 
 
+// Fonction pour la suppression
+
+Router.delete("/:id", (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID non reconnu")
+
+    Users.findByIdAndRemove(req.params.id, (err, docs) => {
+        if (!err) res.send(docs);
+        else console.log("erreur de suppression")
+    })
+})
 
 
 
