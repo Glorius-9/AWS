@@ -1,0 +1,19 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "creation d'un serveur pour la monté des compétance ",
+  "main": "server.js",
+  "author": "Rachid Ait Slimane",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
