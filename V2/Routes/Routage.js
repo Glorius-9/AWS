@@ -1,91 +1,116 @@
-const express = require('express');
+const express = require("express");
+const bcrypt = require("bcrypt");
 const Router = express.Router();
-const ObjectID = require('mongoose').Types.ObjectId;
+var app = express();
 
-const { Users } = require('../models/Users');
+const User = require('../models/Users');
+const authenticateUser = require("../middlewares/authenticateUser");
 
+app.use(express.static("../Public"));
+app.set("view engine", "ejs");
 
-// Methode pour recuperer les elements d'une table de la base de données
-Router.get('/', (req, res) => {
-    Users.find((err, docs) => {
-        if (!err) res.send(docs)
-        else console("erreur " + err)
+// route get
+Router
+    .get("/", (req, res) => {
+        res.render("index");
+    })
+    .get("/login", (req, res) => {
+        res.render("login");
+    })
+    .get("/register", (req, res) => {
+        res.render("Register");
+    })
+    .get("/profil", (req, res) => {
+        res.render("profil");
+    })
+    .get("/MarketPlace", (req, res) => {
+        res.render("MarketPlace");
+    })
+    .get("/ModifierI", (req, res) => {
+        res.render("ModifierI");
+    })
+    .get("/ListeAmi", (req, res) => {
+        res.render("ListeAmi");
+    })
+    .get("/Lancement", (req, res) => {
+        res.render("Lancement");
     })
 
-})
 
-//Methode pour Enregistrer nouveau element
-Router.post('/', (req, res) => {
-    const newRecord = new Users({
-        Pseudo: req.body.Pseudo,
-        Password: req.body.Password
-    })
-    newRecord.save((err, docs) => {
-        if (!err) res.send(docs)
-        else console.log("Erreur d'enregistrement " + err);
-    })
-})
 
-// Fonction pour la modification
-Router.put("/:id", (req, res) => {
-    if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID non reconnu")
+.get("/", authenticateUser, (req, res) => {
+    res.render("/", { User: req.session.User });
+});
 
-    const UpdateRecorder = {
-        Pseudo: req.params.Pseudo,
-        Password: req.params.Password
+Router.post("/register", async(req, res) => {
+    const { pseudo, email, password } = req.body;
+
+    // check for missing filds
+    if (!pseudo || !email || !password) {
+        res.send("remplir tous les champs");
+        return;
+    }
+
+    const doesUserExitsAlreay = await User.findOne({ email });
+
+    if (doesUserExitsAlreay) {
+        res.send("l'utilisateur existe deja!");
+        return;
+    }
+
+    // l hasher le  password
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const nouveau = new User({ pseudo, email, password: hashedPassword });
+    console.log(nouveau);
+    nouveau
+        .save()
+        .then(() => {
+            res.redirect('/login');
+            return;
+        })
+        .catch((err) => console.log(err));
+});
+
+
+Router.post("/login", async(req, res) => {
+    const { pseudo, password } = req.body;
+
+    if (!pseudo || !password) {
+        res.send("veillez remplir les champs!");
+        return;
+    }
+
+    const UserExits = await User.findOne({ pseudo });
+
+    if (!UserExits) {
+        res.send("pass ou pseudo incorrect!");
+        return;
+    }
+
+    const doesPasswordMatch = await bcrypt.compare(
+        password,
+        UserExits.password
+    );
+
+    if (!doesPasswordMatch) {
+        res.send("pass ou pseudo incorrect!");
+        return;
+    }
+
+    req.session.user = {
+        pseudo,
     };
+    res.redirect("/profil");
 
-    Users.findByIdAndUpdate(
-        req.params.id, { $set: UpdateRecorder }, { new: true },
-        (err, docs) => {
-            if (!err) res.send(docs);
-            else console.log("erreur lors de modification");
-        }
-    )
+    //res.render("profil")
 })
 
 
-// Fonction pour la suppression
-
-Router.delete("/:id", (req, res) => {
-    if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID non reconnu")
-
-    Users.findByIdAndRemove(req.params.id, (err, docs) => {
-        if (!err) res.send(docs);
-        else console.log("erreur de suppression")
-    })
-})
-
-
-
-Router.get('/', (req, res) => {
-    res.sendFile("./index.html");
-})
-
-
-Router.get('/login', (req, res) => {
-    res.sendFile("index.html")
-})
-
-Router.get('/inscription', (req, res) => {
-    res.sendFile("inscription.html")
-})
-
-Router.get('/Parchemin', (req, res) => {
-    res.sendFile("Parchemin.html")
-})
-
-Router.get('/ListeAmi', (req, res) => {
-    res.sendFile("ListeAmi.html")
-})
-
-Router.get('/Lancement', (req, res) => {
-    res.sendFile("Lancement.html")
-})
-
-
+//Deconnexion
+Router.get("/logout", authenticateUser, (req, res) => {
+    req.session.user = null;
+    res.redirect("/login");
+});
 
 
 module.exports = Router

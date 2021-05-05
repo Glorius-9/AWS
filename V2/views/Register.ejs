@@ -1,0 +1,19 @@
+<%- include("./parties/Header") %>
+    <div class="container mt-5">
+        <form action="/register" method="POST" style="margin-left: 40%; margin-right: 40%;">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Pseudo</label>
+                <input type="text" name="pseudo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+            <a href="/login">Se Connecter</button>
+        </form>
+    </div>
