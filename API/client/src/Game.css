@@ -1,0 +1,27 @@
+.board .row {
+  text-align: center;
+  justify-content: center;
+}
+
+.board .col {
+  text-align: center;
+  justify-content: center;
+}
+.board {
+  margin: auto;  
+}
+
+.board .cell {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board .cell.gray {
+  background-color: #8d6b45;
+}
+.board .cell.white {
+  background-color: #eacda5;
+}
