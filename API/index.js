@@ -30,7 +30,7 @@ async function start() {
             useCreateIndex: true
         })
 
-        const getGames = () => {
+        const getGames = () => { //recupère la partie (nombre joueurs,emplacement ...)
             return games.map((g) => {
                 const { players, ...game } = g;
                 return {
@@ -40,8 +40,8 @@ async function start() {
             })
         }
 
-        const getGameById = (gameId) => {
-            return getGames().find((game)=> game.id === gameId)
+        const getGameById = (gameId) => { 
+            return getGames().find((game)=> game.id === gameId) 
         }
 
         const getGameForPlayer = (player) => {

@@ -19,8 +19,7 @@
     "socket.io-client": "^2.3.0",
     "thunk": "0.0.1"
   },
-  
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
