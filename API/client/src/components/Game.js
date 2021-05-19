@@ -40,7 +40,7 @@ export default function Game({ leaveGame, game, color,}) {
     return (
       <>
         <Col>
-          <div className="text-center">vous etes :{color}</div>
+          <div className="text-center">vous etes connecté à la partie</div>
           {renderBoard()}
         </Col>
       </>
