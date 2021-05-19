@@ -1,5 +1,4 @@
 const express = require ('express')
-const movePiece = require('./movePiece');
 const config = require ('config')
 const mongoose = require('mongoose')
 const app = express()
@@ -55,11 +54,11 @@ async function start() {
         const addPlayerToGame = ({ player, gameId }) => {
             const game = games.find((game)=> game.id === gameId)
             game.players.push({
-            color: 'red',
+            color: 'black',
             socket: player,
             });
-
-            return 'red';
+        
+            return 'black';
         }
 
         const sendGames = (sender) => {
@@ -67,7 +66,22 @@ async function start() {
         };
 
         const createGame = ({ player, name }) => {
-          
+            const game = {
+                name,
+                players: [
+                {
+                    socket: player,
+                
+                },
+                ],
+                id: nextGameId++,
+                // board: [
+                        // definition du shemas de jeux
+                // ],
+            
+            };
+            games.push(game);
+            return game;
             
         }
 
@@ -80,9 +94,7 @@ async function start() {
             });
         }
 
-        const isGameOver = ({ player }) => {
-            const game = getGameForPlayer(player);
-        };
+    
 
         io.on('connection', socket => {
             socket.emit('games', getGames());
@@ -90,18 +102,17 @@ async function start() {
                 const game = createGame({player: socket, name})  
                 sendGames(io);
                 socket.emit('your-game-created', game.id);
-                socket.emit('color', 'red');
             })
 
             socket.on('join-game', (gameId) => {
                 const game = getGameById(gameId);
                 if (game.numberOfPlayers < 2) {
-                    const color = addPlayerToGame({
+                    const partie = addPlayerToGame({
                         player: socket,
                         gameId,
                     });
                     sendGames(io);
-                    socket.emit('color', color);
+                  
                 }
                 sendGames(io);
             })
