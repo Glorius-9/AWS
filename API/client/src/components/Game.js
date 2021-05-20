@@ -92,9 +92,10 @@ class Joueur extends React.Component {
   render() {
     return (
       <div>
-        <div className="status">{this.props.name}</div>
-        <div>{'<'}{this.props.description}{'>'}</div>
-        <div>HP:{this.props.hp}</div>
+        <div className="status" style={{ color: 'red' }}>
+          {this.props.name}</div>
+        <div style={{ color: 'red' }}>{'<'}{this.props.description}{'>'}</div>
+        <div style={{ color: 'red' }}>HP:{this.props.hp}</div>
         <div className="Joueur-row">
           <button disabled={this.props.Cdsjoueur[0]===0 && !this.props.disabled ? false : true} type="A" onClick={() => this.handleClick_A()}>A{this.state.cds}</button>
           <button disabled={this.props.Cdsjoueur[1]===0 && !this.props.disabled ? false : true} type="D" onClick={() => this.handleClick_D()}>D</button>
@@ -245,15 +246,15 @@ NextTour()
           />
           <br />
           <br />
-          <div>
+          <div style={{ color: 'red' }}>
             {
               this.state.FinTJ1 && this.state.FinTJ2 === true ?
-              <div>
+              <div >
               <p>Fin tour</p>
               <button onClick={()=>this.NextTour()}>NextTour</button>
               </div>
               :
-              <p>Tour en cours</p>
+              <p>Tour en cours . . .</p>
               
             }
           </div>
