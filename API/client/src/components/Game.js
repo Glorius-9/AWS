@@ -191,11 +191,25 @@ class Game2 extends React.Component {
   
 NextTour()
   {
-
+    var i;
+    for(i=0;i<5;i++)
+    {
+      if(this.state.action1[i]==0)
+      {
+        this.setState({cds1: this.state.cds1.map((cd)=> cd!=0 ? cd-1 : 0)})
+        console.log("Je suis là")
+      }
+        
+    }
+   this.setState({cds1: this.state.action1})
+   this.setState({cds2: this.state.action2})
     this.setState({FinTJ1: false})
     this.setState({FinTJ2: false})
     this.setState({J2disabled : false})
     this.setState({J1disabled : false})
+    this.setState({action1 : [0,0,0,0,0]})
+    this.setState({action2 : [0,0,0,0,0]})
+    
   }
  
  FinTour(props) 
@@ -254,7 +268,12 @@ NextTour()
               <button onClick={()=>this.NextTour()}>NextTour</button>
               </div>
               :
-              <p>Tour en cours . . .</p>
+              <p>Tour en cours . . .,
+              <br/>,
+              Joueur1 : {this.state.action1},
+              <br/>,
+              Joueur2 : {this.state.action2}</p>
+
               
             }
           </div>
