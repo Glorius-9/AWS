@@ -191,6 +191,7 @@ class Game2 extends React.Component {
   
 NextTour()
   {
+    ///Reduire le coldown
     var i;
     for(i=0;i<5;i++)
     {
@@ -201,14 +202,47 @@ NextTour()
       }
         
     }
+
    this.setState({cds1: this.state.action1})
    this.setState({cds2: this.state.action2})
     this.setState({FinTJ1: false})
     this.setState({FinTJ2: false})
     this.setState({J2disabled : false})
     this.setState({J1disabled : false})
+    
+    const j1Attack = (this.state.action1[0]===1 ? true :false)
+    const j2Attack = (this.state.action2[0]===1 ? true :false)
+    const j1Def = (this.state.action1[1]===1 ? true :false)
+    const j2Def = (this.state.action2[1]===1 ? true :false)
+    const j1Heal = (this.state.action1[2]===1 ? true :false)
+    const j2Heal = (this.state.action2[2]===1 ? true :false)
+    const j1Stun = (this.state.action1[3]===1 ? true :false)
+    const j2Stun = (this.state.action2[3]===1 ? true :false)
+    const j1Ant = (this.state.action1[4]===1 ? true :false)
+    const j2Ant = (this.state.action2[4]===1 ? true :false)
+    //coldown
+    j1Stun ? this.setState({action1: [0,0,0,3,0]}) :
+    j2Stun ? this.setState({action2: [0,0,0,3,0]}) :
+    j1Attack ? this.setState({action1: [1,0,0,0,0]}) :
+    j2Attack ? this.setState({action2: [1,0,0,0,0]}) :
+    j1Def ? this.setState({action1: [0,1,0,0,0]}) :
+    j2Def ? this.setState({action2: [0,1,0,0,0]}) :
+    j1Heal ? this.setState({action1: [0,0,2,0,0]}) :
+    j2Heal ? this.setState({action2: [0,0,2,0,0]}) :
+    j1Ant ? this.setState({action2: [0,0,0,0,5]}) :
+    j2Ant ? this.setState({action2: [0,0,0,0,5]}) :
+    this.setState({cds1: this.state.action1})
+   this.setState({cds2: this.state.action2})
+
     this.setState({action1 : [0,0,0,0,0]})
     this.setState({action2 : [0,0,0,0,0]})
+    j1Attack && !j2Def && !j2Ant && !j2Stun ? this.setState({hpJ2 :this.state.hpJ2-10}) : console.log("attack fail")
+    j2Attack && !j1Def && !j1Ant && !j1Stun ? this.setState({hpJ1 :this.state.hpJ1-10}) : console.log("attack fail")
+    j1Stun && !j2Stun && !j2Def ? this.setState({cds2 : this.state.cds2.map((cd)=> cd+1 )}) : console.log("Stun fail")
+    j2Stun && !j1Stun && !j1Def ? this.setState({cds1 : this.state.cds1.map((cd)=> cd+1 )}) :console.log("Stun fail")
+    j1Heal && !j2Stun ? this.setState({hpJ1 :this.state.hpJ1+10}) :  console.log("Heal fail")
+    j2Heal && !j1Stun ? this.setState({hpJ2 :this.state.hpJ2+10}) : console.log("Heal fail")
+
     
   }
  
@@ -249,7 +283,7 @@ NextTour()
     return (
       <div className="game">
         <div className="game-Joueur">
-          <Joueur disabled={this.state.J1disabled} name="Joueur 1" description="Blablablablabla blabla, blalabla " hp = {this.state.hpJ1} 
+          <Joueur disabled={this.state.J1disabled} name="EL wiz" description="Force et honneur" hp = {this.state.hpJ1} 
           onClick_A={() => this.handleClick_A(1)} 
           onClick_D={() => this.handleClick_D(1)}
           onClick_H={() => this.handleClick_H(1)}
@@ -260,7 +294,7 @@ NextTour()
           />
           <br />
           <br />
-          <div style={{ color: 'red' }}>
+          <div style={{ color: 'blue' }}>
             {
               this.state.FinTJ1 && this.state.FinTJ2 === true ?
               <div >
@@ -279,7 +313,7 @@ NextTour()
           </div>
           <br />
           <br />
-          <Joueur disabled={this.state.J2disabled} name="Joueur 2" description="J'ai les chats , des boules de poiles" hp = {this.state.hpJ2}    
+          <Joueur disabled={this.state.J2disabled} name="Rambel" description="gloire et victoire" hp = {this.state.hpJ2}    
           onClick_A={() => this.handleClick_A(2)} 
           onClick_D={() => this.handleClick_D(2)}
           onClick_H={() => this.handleClick_H(2)}
