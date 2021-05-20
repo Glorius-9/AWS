@@ -7,6 +7,7 @@ const path = require('path')
 const http = require('http');
 app.use(express.json({extended: true}))
 
+
 app.use('/api/auth', require('./routes/auth.routes'))
 const server = http.createServer(app);
 const io = socketio(server);
@@ -40,11 +41,11 @@ async function start() {
             })
         }
 
-        const getGameById = (gameId) => { 
+        const getGameById = (gameId) => { //chercher une partie deja crée 
             return getGames().find((game)=> game.id === gameId) 
         }
 
-        const getGameForPlayer = (player) => {
+        const getGameForPlayer = (player) => { 
             return games.find((g) =>
                 g.players.find((p) => p.socket === player)
             );
@@ -71,7 +72,6 @@ async function start() {
                 players: [
                 {
                     socket: player,
-                
                 },
                 ],
                 id: nextGameId++,

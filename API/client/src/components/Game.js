@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
-
 import '../Game.css';
+import img from "../bg.gif"
 
 export default function Game({ leaveGame, game, color,}) {
 
@@ -14,8 +14,11 @@ export default function Game({ leaveGame, game, color,}) {
 
   const renderBoard = () => {
     return (
-    <div>
+    <div style={{ backgroundImage: `url(${img})` }}>
+      <center>
         <Game2 />
+      </center>
+        
     </div>
     );
   };
@@ -52,13 +55,9 @@ export default function Game({ leaveGame, game, color,}) {
     </Row>
   );
 }
+//-----------------------------------
 
 
-///
-function EvalTour(nTour) // fonction qui evalue les action de chaque joueur
-  {
-    {return(<div>Tour : {nTour} Blalalalalalllabhhkfhdfsilhflsfgsfsk</div>);}
-  }
 
 
 class Joueur extends React.Component {
@@ -97,11 +96,11 @@ class Joueur extends React.Component {
         <div>{'<'}{this.props.description}{'>'}</div>
         <div>HP:{this.props.hp}</div>
         <div className="Joueur-row">
-          <button disabled={this.props.disabled} type="A" onClick={() => this.handleClick_A()}>A</button>
-          <button disabled={this.props.disabled} type="D" onClick={() => this.handleClick_D()}>D</button>
-          <button disabled={this.props.disabled} type="H" onClick={() => this.handleClick_H()}>H</button>
-          <button disabled={this.props.disabled} type="S" onClick={() => this.handleClick_S()}>S</button>
-          <button disabled={this.props.disabled} type="Ant" onClick={() => this.handleClick_Ant()}>Ant</button>
+          <button disabled={this.props.Cdsjoueur[0]===0 && !this.props.disabled ? false : true} type="A" onClick={() => this.handleClick_A()}>A{this.state.cds}</button>
+          <button disabled={this.props.Cdsjoueur[1]===0 && !this.props.disabled ? false : true} type="D" onClick={() => this.handleClick_D()}>D</button>
+          <button disabled={this.props.Cdsjoueur[2]===0 && !this.props.disabled ? false : true} type="H" onClick={() => this.handleClick_H()}>H</button>
+          <button disabled={this.props.Cdsjoueur[3]===0 && !this.props.disabled ? false : true} type="S" onClick={() => this.handleClick_S()}>S</button>
+          <button disabled={this.props.Cdsjoueur[4]===0 && !this.props.disabled ? false : true} type="Ant" onClick={() => this.handleClick_Ant()}>Ant</button>
           <button onClick={() => (this.handleClick_FT())}>Fin de tour</button>
         </div>
         
@@ -117,15 +116,18 @@ class Game2 extends React.Component {
     
     this.state = {
       joueurs: Array(2).fill(null),
-      action1: [0,0,0,0,0],
-      action2: [0,0,0,0,0],
+      action1: [0,0,0,0,0], //action du joueur 1
+      action2: [0,0,0,0,0], //action du joueur 2
+      cds1 : [0,0,0,0,0], //temps de recherche du joueur 1
+      cds2 : [0,0,0,0,0], //temps de recherche du joueur 2
       hpJ1 : 100,
       hpJ2 : 100,
-      J1disabled : false,
-      J2disabled : false,
-      FinTJ1 : false,
-      FinTJ2 : false,
-      Tour : 0
+      J1disabled : false, //dsactivé le joueur1
+      J2disabled : false,//dsactivé le joueur2
+      FinTJ1 : false, //Fin du tour du joueur1
+      FinTJ2 : false, //Fin du tour du joueur1
+      Tour : 0,
+      test :0
       
     };
   }
@@ -184,18 +186,37 @@ class Game2 extends React.Component {
     this.setState({J2disabled : true})
     this.setState({FinTJ1: true})
   }
+
+  
+NextTour()
+  {
+
+    this.setState({FinTJ1: false})
+    this.setState({FinTJ2: false})
+    this.setState({J2disabled : false})
+    this.setState({J1disabled : false})
+  }
  
  FinTour(props) 
  { // function appeler quand les deux joueurs auron fini leur tour
 
+  const ReStar=
+  (
+    <div>ca marche</div>
+  )
+  const EvalTour=
+    (
+      <div>Tour : Evaluation du tour </div>
+    )
    return (
     props.joueur1Tour && props.joueur2Tour === true ? 
     <div>
       {
-      <p>Fin de tour ! {props.action1} {props.action2} {EvalTour(props.nTour)} </p>
-      
+      <p>Fin de tour ! {props.action1} {props.action2} {} </p>
+      //EvalTour,
+      //ReStar,
+      //props.reset()
       }
-      
     </div> 
     ://else
     <div>
@@ -220,11 +241,22 @@ class Game2 extends React.Component {
           onClick_S={() => this.handleClick_S(1)}
           onClick_Ant={() => this.handleClick_Ant(1)}
           onClick_FT={() => this.handleClick_FT(1)}
-          joueur="1"
+          Cdsjoueur={this.state.cds1}
           />
           <br />
           <br />
-          <this.FinTour joueur1Tour={this.state.FinTJ1} joueur2Tour={this.state.FinTJ2 } n={this.state.n} action1={this.state.action1} action2={this.state.action2} nTour={this.state.Tour} />
+          <div>
+            {
+              this.state.FinTJ1 && this.state.FinTJ2 === true ?
+              <div>
+              <p>Fin tour</p>
+              <button onClick={()=>this.NextTour()}>NextTour</button>
+              </div>
+              :
+              <p>Tour en cours</p>
+              
+            }
+          </div>
           <br />
           <br />
           <Joueur disabled={this.state.J2disabled} name="Joueur 2" description="J'ai les chats , des boules de poiles" hp = {this.state.hpJ2}    
@@ -234,7 +266,7 @@ class Game2 extends React.Component {
           onClick_S={() => this.handleClick_S(2)}
           onClick_Ant={() => this.handleClick_Ant(2)}
           onClick_FT={() => this.handleClick_FT2(2)}
-          joueur="2"
+          Cdsjoueur={this.state.cds2}
           />
         </div>
         <div className="game-info">
@@ -243,3 +275,8 @@ class Game2 extends React.Component {
     );
   }
 }
+
+
+
+///<this.FinTour joueur1Tour={this.state.FinTJ1} joueur2Tour={this.state.FinTJ2 } n={this.state.n} action1={this.state.action1} action2={this.state.action2} nTour={this.state.Tour} 
+//reset={() => this.reset()} />
