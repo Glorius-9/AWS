@@ -9,6 +9,7 @@ export const useHttp = () => {
         try {
 
             if (body) {
+<<<<<<< HEAD
                 body = JSON.stringify(body);
                 headers['Content-Type'] = 'application/json';
             }
@@ -18,6 +19,17 @@ export const useHttp = () => {
 
             if(!response.ok){
                 throw new Error(data.message || 'Un problème est survenu')
+=======
+                body = JSON.stringify(body)
+                headers['Content-Type'] = 'application/json'
+            }
+
+            const response = await fetch(url, {method, body, headers})
+            const data = await response.json()
+
+            if(!response.ok){
+                throw new Error(data.message || 'что-то пошло не так')
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
             }
 
             setLoading(false)

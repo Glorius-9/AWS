@@ -13,7 +13,11 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
+<<<<<<< HEAD
     "react-scripts": "^4.0.3",
+=======
+    "react-scripts": "3.4.1",
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.3.0",

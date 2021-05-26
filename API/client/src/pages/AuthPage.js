@@ -2,7 +2,10 @@ import React, {useContext, useEffect, useState} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 import {useMessage} from '../hooks/message.hook'
+<<<<<<< HEAD
 import img from "../bg.gif"
+=======
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
 
 export const AuthPage = () => {
   const auth = useContext(AuthContext)
@@ -10,6 +13,10 @@ export const AuthPage = () => {
   const {loading, request, error, clearError} = useHttp()
   const [form, setForm] = useState({email:'', password:''})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
   useEffect(()=>{
     message(error)
     clearError()
@@ -34,9 +41,13 @@ export const AuthPage = () => {
 
 
   return (
+<<<<<<< HEAD
     <>
       
     <div id="main-container" className="container-fluid"> 
+=======
+    <div id="main-container" className="container-fluid">
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
     <div className="row">
         <div id="auth-form" className="card border-dark">
         <h5 className="card-header bg-dark text-white" align="center">jeux de Combat en ligne</h5>
@@ -69,19 +80,30 @@ export const AuthPage = () => {
                     disabled={loading}
                     onClick={loginHandler}
                 >
+<<<<<<< HEAD
                     Se Connecter</button>
+=======
+                    Login</button>
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
                 <button 
                     type="button"
                     className="btn btn-dark"
                     onClick={registerHandler}
                     disabled={loading}
+<<<<<<< HEAD
                 >S'inscrire</button>
+=======
+                >Register</button>
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
             </div>
             </form>
         </div>
         </div>
     </div>
     </div>
+<<<<<<< HEAD
     </>
+=======
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
   )
 }

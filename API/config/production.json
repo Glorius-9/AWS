@@ -1,5 +1,9 @@
 {
     "port": 4000,
     "jwtSecret": "fddsewt3t3twestwewnji32",
+<<<<<<< HEAD
     "mongoUri": "mongodb+srv://root:root@gloriuscluster.e5a1a.mongodb.net/glorius9?retryWrites=true&w=majority"
+=======
+    "mongoUri": "mongodb://localhost:27017"
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
 }

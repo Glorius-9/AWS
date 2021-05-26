@@ -5,14 +5,23 @@ const app = express()
 const socketio = require('socket.io');
 const path = require('path')
 const http = require('http');
+<<<<<<< HEAD
 
 app.use(express.json({extended: true}))
 
+=======
+app.use(express.json({extended: true}))
+
+
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
 app.use('/api/auth', require('./routes/auth.routes'))
 const server = http.createServer(app);
 const io = socketio(server);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')));
     app.get('*', (req, res) => {
@@ -56,8 +65,16 @@ async function start() {
         const addPlayerToGame = ({ player, gameId }) => {
             const game = games.find((game)=> game.id === gameId)
             game.players.push({
+<<<<<<< HEAD
             socket: player,
             });
+=======
+            color: 'black',
+            socket: player,
+            });
+        
+            return 'black';
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
         }
 
         const sendGames = (sender) => {
@@ -67,7 +84,10 @@ async function start() {
         const createGame = ({ player, name }) => {
             const game = {
                 name,
+<<<<<<< HEAD
                 turn: 'a',
+=======
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
                 players: [
                 {
                     socket: player,
@@ -93,6 +113,11 @@ async function start() {
             });
         }
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
         io.on('connection', socket => {
             socket.emit('games', getGames());
             socket.on('create-game', (name) => {
@@ -113,6 +138,7 @@ async function start() {
                 }
                 sendGames(io);
             })
+<<<<<<< HEAD
             socket.on('action', ({selectedPiece, destination,}) => {
                 const game = getGameForPlayer(socket);
                 movePiece({ game, selectedPiece, destination});
@@ -123,6 +149,9 @@ async function start() {
                 }
                 sendGames(io);
                 })
+=======
+
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
           
             socket.on('disconnect', () => {
                 endGame({ player: socket });

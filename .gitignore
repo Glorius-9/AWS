@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+#Node models
+/API/node_modules/*
 
 # Log file
 *.log

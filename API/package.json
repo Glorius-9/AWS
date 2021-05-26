@@ -10,7 +10,11 @@
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+<<<<<<< HEAD
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+=======
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
   },
   "author": "",
   "license": "ISC",

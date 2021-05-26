@@ -11,7 +11,11 @@ router.post(
     '/register',
     [
         check('email', 'Adresse Email incorrecte').isEmail(),
+<<<<<<< HEAD
         check('password', 'Longueur minimale du mot de passe 4 caractères').isLength({min:4})
+=======
+        check('password', 'Longueur minimale du mot de passe 6 caractères').isLength({min:4})
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
     ], 
     async (req, res)=> {
     try {
@@ -29,6 +33,7 @@ router.post(
         if (candidate) {
             return res.status(400).json({message: "l'utilisateur existe déjà"})
         }
+<<<<<<< HEAD
         else{
             const hashedPassword = await bcrypt.hash(password, 12)
             const user = new User({email, password: hashedPassword})
@@ -38,6 +43,17 @@ router.post(
 
     } catch(e) {
         res.status(500).json({message: "Une erreur s'est produite !"})
+=======
+
+        const hashedPassword = await bcrypt.hash(password, 12)
+        const user = new User({email, password: hashedPassword})
+        await user.save()
+
+        res.status(201).json({message: 'utilisateur créé'})
+
+    } catch(e) {
+        res.status(500).json({message: "Une erreur s'est produite ..."})
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
     }
 })
 
@@ -50,6 +66,10 @@ router.post(
     async (req, res)=> {
     try {
         const errors = validationResult(req)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
         if (!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
@@ -62,7 +82,11 @@ router.post(
         const user = await User.findOne({email})
 
         if(!user) {
+<<<<<<< HEAD
             return res.status(400).json({mesmsage: 'utilisateur introuvable!'})
+=======
+            return res.status(400).json({message: 'utilisateur introuvable!'})
+>>>>>>> 6258fc327a9463079901a804a70cb7b0e98ab8ff
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
